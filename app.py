@@ -4,7 +4,7 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-# Database Connection Function (Details Docker Compose se ayengi)
+# Database Connection Function (Credentials from Environment Variables)
 def get_db_connection():
     conn = psycopg2.connect(
         host=os.environ.get('DB_HOST', 'localhost'),
@@ -14,7 +14,7 @@ def get_db_connection():
     )
     return conn
 
-# Database Table Setup (Agar table pehle se nahi hai)
+# Database Table Setup (if table doesn't exist)
 def init_db():
     try:
         conn = get_db_connection()
