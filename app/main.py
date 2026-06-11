@@ -4,7 +4,6 @@ from . import models, database
 from .database import engine
 from pydantic import BaseModel
 
-
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="DevOps Project", version="1.0.0")
