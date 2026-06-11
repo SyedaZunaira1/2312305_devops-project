@@ -1,5 +1,3 @@
-import pytest
-
 STUDENT = {
     "reg_no": "TEST-001",
     "name": "Test Student",
@@ -7,9 +5,11 @@ STUDENT = {
     "section": "A",
 }
 
+
 def test_create_student_returns_201(client):
     response = client.post("/students", json=STUDENT)
     assert response.status_code == 201
+
 
 def test_create_student_returns_correct_data(client):
     response = client.post("/students", json={**STUDENT, "reg_no": "TEST-002"})
@@ -17,10 +17,12 @@ def test_create_student_returns_correct_data(client):
     assert data["name"] == "Test Student"
     assert data["semester"] == 6
 
+
 def test_get_all_students_returns_list(client):
     response = client.get("/students")
     assert response.status_code == 200
     assert isinstance(response.json(), list)
+
 
 def test_get_student_by_reg_no(client):
     client.post("/students", json={**STUDENT, "reg_no": "TEST-003"})
@@ -28,9 +30,11 @@ def test_get_student_by_reg_no(client):
     assert response.status_code == 200
     assert response.json()["reg_no"] == "TEST-003"
 
+
 def test_get_nonexistent_student_returns_404(client):
     response = client.get("/students/DOES-NOT-EXIST")
     assert response.status_code == 404
+
 
 def test_duplicate_reg_no_returns_409(client):
     client.post("/students", json={**STUDENT, "reg_no": "TEST-DUP"})

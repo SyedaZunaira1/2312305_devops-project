@@ -4,9 +4,11 @@ from . import models, database
 from .database import engine
 from pydantic import BaseModel
 
+
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="DevOps Project", version="1.0.0")
+
 
 # ── Pydantic schemas ─────────────────────────────────────
 class StudentCreate(BaseModel):
@@ -15,11 +17,13 @@ class StudentCreate(BaseModel):
     semester: int
     section: str
 
+
 class StudentResponse(StudentCreate):
     id: int
 
     class Config:
         from_attributes = True
+
 
 # ── Dependency ────────────────────────────────────────────
 def get_db():
@@ -28,6 +32,7 @@ def get_db():
         yield db
     finally:
         db.close()
+
 
 # ── Endpoints ─────────────────────────────────────────────
 @app.get("/health")
@@ -44,6 +49,7 @@ def health(db: Session = Depends(get_db)):
         "student": "2312305",   # <-- YOUR REGISTRATION NUMBER
     }
 
+
 @app.post("/students", response_model=StudentResponse, status_code=201)
 def create_student(student: StudentCreate, db: Session = Depends(get_db)):
     """Add a new student record to the database."""
@@ -58,10 +64,12 @@ def create_student(student: StudentCreate, db: Session = Depends(get_db)):
     db.refresh(db_student)
     return db_student
 
+
 @app.get("/students", response_model=list[StudentResponse])
 def list_students(db: Session = Depends(get_db)):
     """Return all students from the database."""
     return db.query(models.Student).all()
+
 
 @app.get("/students/{reg_no}", response_model=StudentResponse)
 def get_student(reg_no: str, db: Session = Depends(get_db)):
