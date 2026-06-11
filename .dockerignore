@@ -11,3 +11,5 @@ test.db
 README.md
 docker-compose*.yml
 .github/
+
+# ignore local config
