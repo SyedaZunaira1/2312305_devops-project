@@ -43,3 +43,5 @@ The application automatically deploys to an AWS EC2 instance when changes are pu
 The GitHub Actions workflow connects via SSH, pulls the latest code, creates the `.env` file using GitHub Secrets, and starts the services using `docker-compose.prod.yml`.
 
 <!-- updated docs -->
+
+<!-- health check endpoint documented -->
