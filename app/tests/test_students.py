@@ -1,3 +1,5 @@
+import pytest  # noqa: F401
+
 STUDENT = {
     "reg_no": "TEST-001",
     "name": "Test Student",
